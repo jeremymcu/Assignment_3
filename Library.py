@@ -129,11 +129,11 @@ class Library:
             WHERE ISBN = :old
             """, (
                 {
-                    "ISBN": book.ISBN if book.ISBN != 'NULL' else """SELECT ISBN FROM Books WHERE ISBN = isbn""",
-                    "title": book.title if book.title != 'NULL' else """SELECT title FROM Books WHERE ISBN = ISBN""",
-                    "author": book.author if book.author != 'NULL' else """SELECT author FROM Books WHERE ISBN = ISBN""",
-                    "publisher": book.publisher if book.publisher != 'NULL' else """SELECT publisher FROM Books WHERE ISBN = ISBN""",
-                    "publication_date": book.publication_date if book.publication_date != 'NULL' else """SELECT publication_date FROM Books WHERE ISBN = ISBN""",
+                    "ISBN": book.ISBN,
+                    "title": book.title,
+                    "author": book.author,
+                    "publisher": book.publisher,
+                    "publication_date": book.publication_date,
                     "old": isbn
                 }
             )
