@@ -122,23 +122,76 @@ class Library:
 
     # Update a book
     def update_book(self, isbn, book):
-        self.cursor.execute(
-            """
-            UPDATE Books
-            SET ISBN = :ISBN, title = :title, author = :author, publisher = :publisher, publication_date = :publication_date
-            WHERE ISBN = :old
-            """, (
-                {
-                    "ISBN": book.ISBN,
-                    "title": book.title,
-                    "author": book.author,
-                    "publisher": book.publisher,
-                    "publication_date": book.publication_date,
-                    "old": isbn
-                }
+        if book.ISBN != "":
+            self.cursor.execute(
+                """
+                UPDATE Books
+                SET ISBN = :ISBN
+                WHERE ISBN = :old
+                """, (
+                    {
+                        "ISBN": book.ISBN,
+                        "old": isbn
+                    }
+                )
             )
-        )
-        self.conn.commit()
+            self.conn.commit()
+        if book.title != "":
+            self.cursor.execute(
+                """
+                UPDATE Books
+                SET title = :title
+                WHERE ISBN = :old
+                """, (
+                    {
+                        "title": book.title,
+                        "old": isbn
+                    }
+                )
+            )
+            self.conn.commit()
+        if book.author != "":
+            self.cursor.execute(
+                """
+                UPDATE Books
+                SET author = :author
+                WHERE ISBN = :old
+                """, (
+                    {
+                        "author": book.author,
+                        "old": isbn
+                    }
+                )
+            )
+            self.conn.commit()
+        if book.publisher != "":
+            self.cursor.execute(
+                """
+                UPDATE Books
+                SET publisher = :publisher
+                WHERE ISBN = :old
+                """, (
+                    {
+                        "publisher": book.publisher,
+                        "old": isbn
+                    }
+                )
+            )
+            self.conn.commit()
+        if book.publication_date != "":
+            self.cursor.execute(
+                """
+                UPDATE Books
+                SET publication_date = :publication_date
+                WHERE ISBN = :old
+                """, (
+                    {
+                        "publication_date": book.publication_date,
+                        "old": isbn
+                    }
+                )
+            )
+            self.conn.commit()
 
     # Delete a book
     def delete_book(self, ISBN):
@@ -180,21 +233,62 @@ class Library:
 
     # Update an author
     def update_author(self, ID, author):
-        self.cursor.execute(
-            """
-            UPDATE Authors
-            SET(:ID, :name, :birth_date, :origin)
-            WHERE ID = ID
-            """, (
-                {
-                    "ID": author.ID,
-                    "name": author.name,
-                    "birth_date": author.birth_date,
-                    "origin": author.origin
-                }
+        if author.ID != "":
+            self.cursor.execute(
+                """
+                UPDATE Authors
+                SET ID = :ID
+                WHERE ID = :old
+                """, (
+                    {
+                        "ID": author.ID,
+                        "old": ID
+                    }
+                )
             )
-        )
-        self.conn.commit()
+            self.conn.commit()
+        if author.name != "":
+            self.cursor.execute(
+                """
+                UPDATE Authors
+                SET name = :name
+                WHERE ID = :old
+                """, (
+                    {
+                        "name": author.name,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
+        if author.birth_date != "":
+            self.cursor.execute(
+                """
+                UPDATE Authors
+                SET birth_date = :birth_date
+                WHERE ID = :old
+                """, (
+                    {
+                        "birth_date": author.birth_date,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
+        if author.origin != "":
+            self.cursor.execute(
+                """
+                UPDATE Authors
+                SET origin = :origin
+                WHERE ID = :old
+                """, (
+                    {
+                        "origin": author.origin,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
 
     # Delete an author
     def delete_author(self, ID):
@@ -209,8 +303,8 @@ class Library:
     # Get all authors
     def get_authors(self):
         authors = []
-        for author in self.conn.cursor.execute("SELECT * FROM Authors"):
-            authors.append(Author(*author))
+        for author in self.cursor.execute("SELECT * FROM Authors"):
+            authors.append(author)
         return authors
 
     ##########################################################
@@ -236,21 +330,62 @@ class Library:
 
     # Update a publisher
     def update_publisher(self, ID, publisher):
-        self.conn.cursor.execute(
-            """
-            UPDATE Publishers
-            SET(:name, :address, :country)
-            WHERE ID = ID
-            """, (
-                {
-                    "ID": publisher.ID,
-                    "name": publisher.name,
-                    "address": publisher.address,
-                    "country": publisher.country
-                }
+        if publisher.origin != "":
+            self.cursor.execute(
+                """
+                UPDATE Publishers
+                SET ID = :ID
+                WHERE ID = :old
+                """, (
+                    {
+                        "ID": publisher.ID,
+                        "old": ID
+                    }
+                )
             )
-        )
-        self.conn.commit()
+            self.conn.commit()
+        if publisher.name != "":
+            self.cursor.execute(
+                """
+                UPDATE Publishers
+                SET name = :name
+                WHERE ID = :old
+                """, (
+                    {
+                        "name": publisher.name,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
+        if publisher.address != "":
+            self.cursor.execute(
+                """
+                UPDATE Publishers
+                SET address = :address
+                WHERE ID = :old
+                """, (
+                    {
+                        "address": publisher.address,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
+        if publisher.country != "":
+            self.cursor.execute(
+                """
+                UPDATE Publishers
+                SET country = :country
+                WHERE ID = :old
+                """, (
+                    {
+                        "country": publisher.country,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
 
     # Delete a publisher
     def delete_publisher(self, ID):
@@ -265,8 +400,8 @@ class Library:
     # Get all publishers
     def get_publishers(self):
         publishers = []
-        for publisher in self.conn.cursor.execute("SELECT * FROM Publisher"):
-            publishers.append(Publisher(*publisher))
+        for publisher in self.cursor.execute("SELECT * FROM Publisher"):
+            publishers.append(publisher)
         return publishers
 
     ##########################################################
@@ -293,21 +428,62 @@ class Library:
 
     # Update a book
     def update_borrower(self, ID, borrower):
-        self.cursor.execute(
-            """
-            UPDATE Books
-            SET(:ID, :name, :email, :contact_number)
-            WHERE ID = ID
-            """, (
-                {
-                    "ID": borrower.ID,
-                    "name": borrower.name,
-                    "email": borrower.email,
-                    "contact_number": borrower.contact_number
-                }
+        if borrower.ID != "":
+            self.cursor.execute(
+                """
+                UPDATE Borrowers
+                SET ID = :ID
+                WHERE ID = :old
+                """, (
+                    {
+                        "ID": borrower.ID,
+                        "old": ID
+                    }
+                )
             )
-        )
-        self.conn.commit()
+            self.conn.commit()
+        if borrower.name != "":
+            self.cursor.execute(
+                """
+                UPDATE Borrowers
+                SET name = :name
+                WHERE ID = :old
+                """, (
+                    {
+                        "name": borrower.name,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
+        if borrower.email != "":
+            self.cursor.execute(
+                """
+                UPDATE Borrowers
+                SET email = :email
+                WHERE ID = :old
+                """, (
+                    {
+                        "email": borrower.email,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
+        if borrower.contact_number != "":
+            self.cursor.execute(
+                """
+                UPDATE Borrowers
+                SET contact_number = :contact_number
+                WHERE ID = :old
+                """, (
+                    {
+                        "ID": borrower.contact_number,
+                        "old": ID
+                    }
+                )
+            )
+            self.conn.commit()
 
     # Delete a book
     def delete_borrower(self, ID):
@@ -323,7 +499,7 @@ class Library:
     def get_borrowers(self):
         borrowers = []
         for borrower in self.cursor.execute("SELECT * FROM Borrowers"):
-            borrowers.append(Borrower(*borrower))
+            borrowers.append(borrower)
         return borrowers
 
 # if __name__ == '__main__':
@@ -402,6 +578,7 @@ def main():
         case default:
             pass
 
+    # EXIT
     if usr_input != 17:
         continue_statement = input("Press ENTER to continue!")
         main()
