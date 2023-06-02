@@ -198,8 +198,12 @@ class Library:
         self.cursor.execute(
             """
             DELETE FROM Books
-            WHERE ISBN = ISBN
-            """
+            WHERE ISBN = :ISBN
+            """, (
+                    {
+                        "ISBN": ISBN
+                    }
+                )
         )
         self.conn.commit()
 
@@ -295,8 +299,12 @@ class Library:
         self.cursor.execute(
             """
             DELETE FROM Authors
-            WHERE ID = ID
-            """
+            WHERE ID = :ID
+            """, (
+                    {
+                        "ID": ID
+                    }
+                )
         )
         self.conn.commit()
 
@@ -330,7 +338,7 @@ class Library:
 
     # Update a publisher
     def update_publisher(self, ID, publisher):
-        if publisher.origin != "":
+        if publisher.ID != "":
             self.cursor.execute(
                 """
                 UPDATE Publishers
@@ -393,14 +401,18 @@ class Library:
             """
             DELETE FROM Publisher
             WHERE ID = ID
-            """
+            """, (
+                    {
+                        "ID": ID
+                    }
+                )
         )
         self.conn.commit()
 
     # Get all publishers
     def get_publishers(self):
         publishers = []
-        for publisher in self.cursor.execute("SELECT * FROM Publisher"):
+        for publisher in self.cursor.execute("SELECT * FROM Publishers"):
             publishers.append(publisher)
         return publishers
 
@@ -411,7 +423,7 @@ class Library:
     def insert_borrower(self, borrower):
         self.cursor.execute(
             """
-            INSERT INTO Books
+            INSERT INTO Borrowers
             VALUES(:ID, :name, :email, :contact_number)
             """,
             (
@@ -424,7 +436,6 @@ class Library:
             )
         )
         self.conn.commit()
-        print("books", self.get_books())
 
     # Update a book
     def update_borrower(self, ID, borrower):
@@ -491,7 +502,11 @@ class Library:
             """
             DELETE FROM Books
             WHERE ID = ID
-            """
+            """, (
+                    {
+                        "ID": ID
+                    }
+                )
         )
         self.conn.commit()
 
@@ -526,21 +541,21 @@ def main():
     Lib1 = Library()
     match usr_input:
         case 1:
-            isbn = input("Enter ISBN number:")
-            title = input("Enter title:")
-            author = input("Enter author name:")
-            pub = input("Enter publisher:")
-            date = input("Enter publication date:")
+            isbn = input("Enter ISBN number: ")
+            title = input("Enter title: ")
+            author = input("Enter author name: ")
+            pub = input("Enter publisher: ")
+            date = input("Enter publication date: ")
             newBook = Book(title, author, pub, date, isbn)
             Lib1.insert_book(newBook)
 
         case 2:
             old_isbn = input("Enter the ISBN of the book you want to modify: ")
-            isbn = input("Enter ISBN number:")
-            title = input("Enter title:")
-            author = input("Enter author name:")
-            pub = input("Enter publisher:")
-            date = input("Enter publication date:")
+            isbn = input("Enter ISBN number: ")
+            title = input("Enter title: ")
+            author = input("Enter author name: ")
+            pub = input("Enter publisher: ")
+            date = input("Enter publication date: ")
             new = Book(title, author, pub, date, isbn)
             Lib1.update_book(old_isbn, new)
 
@@ -549,31 +564,83 @@ def main():
             Lib1.delete_book(isbn)
 
         case 4:
-            print(Lib1.get_books())
+            for each in Lib1.get_books():
+                print(each)
 
         case 5:
-            ID = input("Enter author ID number:")
-            name = input("Enter author's name:")
-            birth_date = input("Enter author's birth date:")
-            origin = input("Enter author's origin:")
+            ID = input("Enter author ID number: ")
+            name = input("Enter author's name: ")
+            birth_date = input("Enter author's birth date: ")
+            origin = input("Enter author's origin: ")
             newAuthor = Author(ID, name, birth_date, origin)
             Lib1.insert_author(newAuthor)
 
         case 6:
             old_id = input("Enter the ID of the author you want to modify: ")
-            ID = input("Enter author ID number:")
-            name = input("Enter author's name:")
-            birth_date = input("Enter author's birth date:")
-            origin = input("Enter author's origin:")
+            ID = input("Enter author ID number: ")
+            name = input("Enter author's name: ")
+            birth_date = input("Enter author's birth date: ")
+            origin = input("Enter author's origin: ")
             newAuthor = Author(ID, name, birth_date, origin)
-            Lib1.update_author(newAuthor)
+            Lib1.update_author(old_id, newAuthor)
 
         case 7:
             ID = input("Enter the ID of the author you want to delete: ")
             Lib1.delete_author(ID)
 
         case 8:
-            print(Lib1.get_authors())
+            for each in Lib1.get_authors():
+                print(each)
+
+        case 9:
+            ID = input("Enter publisher's ID number: ")
+            name = input("Enter publisher's name: ")
+            address = input("Enter publisher's address: ")
+            country = input("Enter publisher's country: ")
+            newPub = Publisher(ID, name, address, country)
+            Lib1.insert_publisher(newPub)
+
+        case 10:
+            old_id = input("Enter the ID of the publisher you want to modify: ")
+            ID = input("Enter publisher's ID number: ")
+            name = input("Enter publisher's name: ")
+            address = input("Enter publisher's address: ")
+            country = input("Enter publisher's country: ")
+            newPub = Publisher(ID, name, address, country)
+            Lib1.update_publisher(old_id, newPub)
+
+        case 11:
+            ID = input("Enter the ID of the borrower you want to delete: ")
+            Lib1.delete_publisher(ID)
+
+        case 12:
+            for each in Lib1.get_publishers():
+                print(each)
+
+        case 13:
+            ID = input("Enter borrower's ID number: ")
+            name = input("Enter borrower's name: ")
+            email = input("Enter borrower's email: ")
+            contact = input("Enter borrower's contact number: ")
+            newBorrower = Borrower(ID, name, email, contact)
+            Lib1.insert_borrower(newBorrower)
+
+        case 14:
+            old_id = input("Enter the ID of the borrower you want to modify: ")
+            ID = input("Enter borrower's ID number: ")
+            name = input("Enter borrower's name: ")
+            email = input("Enter borrower's email: ")
+            contact = input("Enter borrower's contact number: ")
+            newBorrower = Borrower(ID, name, email, contact)
+            Lib1.update_borrower(old_id, newBorrower)
+
+        case 15:
+            ID = input("Enter the ID of the borrower you want to delete: ")
+            Lib1.delete_borrower(ID)
+
+        case 16:
+            for each in Lib1.get_borrowers():
+                print(each)
 
         case default:
             pass
