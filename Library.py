@@ -348,60 +348,60 @@ def main():
     [17]. EXIT
     Enter a number:"""))
     Lib1 = Library()
-    if usr_input == 1:
-        isbn = input("Enter ISBN number:")
-        title = input("Enter title:")
-        author = input("Enter author name:")
-        pub = input("Enter publisher:")
-        date = input("Enter publication date:")
-        newBook = Book(title, author, pub, date, isbn)
-        Lib1.insert_book(newBook)
+    match usr_input:
+        case 1:
+            isbn = input("Enter ISBN number:")
+            title = input("Enter title:")
+            author = input("Enter author name:")
+            pub = input("Enter publisher:")
+            date = input("Enter publication date:")
+            newBook = Book(title, author, pub, date, isbn)
+            Lib1.insert_book(newBook)
 
-    elif usr_input == 2:
-        old_isbn = input("Enter the ISBN of the book you want to modify: ")
-        isbn = input("Enter ISBN number:")
-        title = input("Enter title:")
-        author = input("Enter author name:")
-        pub = input("Enter publisher:")
-        date = input("Enter publication date:")
-        new = Book(title, author, pub, date, isbn)
-        Lib1.update_book(old_isbn, new)
+        case 2:
+            old_isbn = input("Enter the ISBN of the book you want to modify: ")
+            isbn = input("Enter ISBN number:")
+            title = input("Enter title:")
+            author = input("Enter author name:")
+            pub = input("Enter publisher:")
+            date = input("Enter publication date:")
+            new = Book(title, author, pub, date, isbn)
+            Lib1.update_book(old_isbn, new)
 
-    elif usr_input == 3:
-        isbn = input("Enter the ISBN of the book you want to delete: ")
-        Lib1.delete_book(isbn)
+        case 3:
+            isbn = input("Enter the ISBN of the book you want to delete: ")
+            Lib1.delete_book(isbn)
 
-    elif usr_input == 4:
-        print(Lib1.get_books())
+        case 4:
+            print(Lib1.get_books())
 
-    elif usr_input == 5:
-        ID = input("Enter author ID number:")
-        name = input("Enter author's name:")
-        birth_date = input("Enter author's birth date:")
-        origin = input("Enter author's origin:")
-        newAuthor = Author(ID, name, birth_date, origin)
-        Lib1.insert_author(newAuthor)
+        case 5:
+            ID = input("Enter author ID number:")
+            name = input("Enter author's name:")
+            birth_date = input("Enter author's birth date:")
+            origin = input("Enter author's origin:")
+            newAuthor = Author(ID, name, birth_date, origin)
+            Lib1.insert_author(newAuthor)
 
-    elif usr_input == 6:
-        old_id = input("Enter the ID of the author you want to modify: ")
-        ID = input("Enter author ID number:")
-        name = input("Enter author's name:")
-        birth_date = input("Enter author's birth date:")
-        origin = input("Enter author's origin:")
-        newAuthor = Author(ID, name, birth_date, origin)
-        Lib1.update_author(newAuthor)
+        case 6:
+            old_id = input("Enter the ID of the author you want to modify: ")
+            ID = input("Enter author ID number:")
+            name = input("Enter author's name:")
+            birth_date = input("Enter author's birth date:")
+            origin = input("Enter author's origin:")
+            newAuthor = Author(ID, name, birth_date, origin)
+            Lib1.update_author(newAuthor)
 
-    elif usr_input == 7:
-        ID = input("Enter the ID of the author you want to delete: ")
-        Lib1.delete_author(ID)
+        case 7:
+            ID = input("Enter the ID of the author you want to delete: ")
+            Lib1.delete_author(ID)
 
-    elif usr_input == 8:
-        print(Lib1.get_authors())
+        case 8:
+            print(Lib1.get_authors())
 
-    else:
-        pass
+        case default:
+            pass
 
-    # EXIT
     if usr_input != 17:
         continue_statement = input("Press ENTER to continue!")
         main()
