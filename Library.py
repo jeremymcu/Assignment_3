@@ -154,7 +154,7 @@ class Library:
     def get_books(self):
         books = []
         for book in self.cursor.execute("SELECT * FROM Books"):
-            books.append(Book(*book))
+            books.append(book)
         return books
 
     ##########################################################
@@ -355,8 +355,8 @@ def main():
         pub = input("Enter publisher:")
         date = input("Enter publication date:")
         newBook = Book(title, author, pub, date, isbn)
-
         Lib1.insert_book(newBook)
+
     elif usr_input == 2:
         old_isbn = input("Enter the ISBN of the book you want to modify: ")
         isbn = input("Enter ISBN number:")
@@ -367,10 +367,18 @@ def main():
         new = Book(title, author, pub, date, isbn)
         Lib1.update_book(old_isbn, new)
 
+    elif usr_input == 3:
+        isbn = input("Enter the ISBN of the book you want to delete: ")
+        Lib1.delete_book(isbn)
+
+    elif usr_input == 4:
+        print(Lib1.get_books())
+
     else:
         pass
 
     if usr_input != 17:
+        continue_statement = input("Press ENTER to continue!")
         main()
     else:
         return
