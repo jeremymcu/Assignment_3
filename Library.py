@@ -374,15 +374,39 @@ def main():
     elif usr_input == 4:
         print(Lib1.get_books())
 
+    elif usr_input == 5:
+        ID = input("Enter author ID number:")
+        name = input("Enter author's name:")
+        birth_date = input("Enter author's birth date:")
+        origin = input("Enter author's origin:")
+        newAuthor = Author(ID, name, birth_date, origin)
+        Lib1.insert_author(newAuthor)
+
+    elif usr_input == 6:
+        old_id = input("Enter the ID of the author you want to modify: ")
+        ID = input("Enter author ID number:")
+        name = input("Enter author's name:")
+        birth_date = input("Enter author's birth date:")
+        origin = input("Enter author's origin:")
+        newAuthor = Author(ID, name, birth_date, origin)
+        Lib1.update_author(newAuthor)
+
+    elif usr_input == 7:
+        ID = input("Enter the ID of the author you want to delete: ")
+        Lib1.delete_author(ID)
+
+    elif usr_input == 8:
+        print(Lib1.get_authors())
+
     else:
         pass
 
+    # EXIT
     if usr_input != 17:
         continue_statement = input("Press ENTER to continue!")
         main()
     else:
         return
-
 
 main()
 
