@@ -2,6 +2,8 @@
 # ID: 10890402
 
 import sqlite3
+from IPython.display import clear_output
+import os
 # from flask import Flask, request, jsonify
 # from flask_cors import CORS
 
@@ -119,6 +121,7 @@ class Library:
             )
         )
         self.conn.commit()
+        print("Book {} has been added successfully!".format(book.ISBN))
 
     # Update a book
     def update_book(self, isbn, book):
@@ -192,6 +195,7 @@ class Library:
                 )
             )
             self.conn.commit()
+        print("Book {} has been updated successfully!".format(isbn))
 
     # Delete a book
     def delete_book(self, ISBN):
@@ -206,6 +210,7 @@ class Library:
                 )
         )
         self.conn.commit()
+        print("Book {} has been deleted successfully!".format(ISBN))
 
     # Get all books
     def get_books(self):
@@ -234,6 +239,7 @@ class Library:
             )
         )
         self.conn.commit()
+        print("Author {} has been added successfully!".format(author.ID))
 
     # Update an author
     def update_author(self, ID, author):
@@ -293,6 +299,7 @@ class Library:
                 )
             )
             self.conn.commit()
+        print("Author {} has been updated successfully!".format(ID))
 
     # Delete an author
     def delete_author(self, ID):
@@ -307,6 +314,7 @@ class Library:
                 )
         )
         self.conn.commit()
+        print("Author {} has been deleted successfully!".format(ID))
 
     # Get all authors
     def get_authors(self):
@@ -335,6 +343,7 @@ class Library:
             )
         )
         self.conn.commit()
+        print("Publisher {} has been inserted successfully!".format(publisher.ID))
 
     # Update a publisher
     def update_publisher(self, ID, publisher):
@@ -394,6 +403,7 @@ class Library:
                 )
             )
             self.conn.commit()
+        print("Publisher {} has been updated successfully!".format(ID))
 
     # Delete a publisher
     def delete_publisher(self, ID):
@@ -408,6 +418,7 @@ class Library:
                 )
         )
         self.conn.commit()
+        print("Publisher {} has been deleted successfully!".format(ID))
 
     # Get all publishers
     def get_publishers(self):
@@ -436,6 +447,7 @@ class Library:
             )
         )
         self.conn.commit()
+        print("Borrower {} has been added successfully!".format(borrower.ID))
 
     # Update a book
     def update_borrower(self, ID, borrower):
@@ -495,6 +507,7 @@ class Library:
                 )
             )
             self.conn.commit()
+        print("Borrower {} has been updated successfully!".format(ID))
 
     # Delete a book
     def delete_borrower(self, ID):
@@ -509,6 +522,7 @@ class Library:
                 )
         )
         self.conn.commit()
+        print("Borrower {} has been deleted successfully!".format(ID))
 
     # Get all books
     def get_borrowers(self):
@@ -537,9 +551,18 @@ def main():
     [15]. Delete Borrower
     [16]. Get Borrower
     [17]. EXIT
-    Enter a number:"""))
+    Enter a number: """))
     Lib1 = Library()
+    
+    # Clear output
+    clear_output()  # method 1
+    os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
     match usr_input:
+        # -----------------------------------------------------
+        # Books
+        # -----------------------------------------------------
+        # Insert book
         case 1:
             isbn = input("Enter ISBN number: ")
             title = input("Enter title: ")
@@ -549,8 +572,20 @@ def main():
             newBook = Book(title, author, pub, date, isbn)
             Lib1.insert_book(newBook)
 
+        # update book
         case 2:
+            # Display the list of objects in the table
+            print("-" * 100)
+            print(f"{'Books':^100}")
+            print("-" * 100)
+            for each in Lib1.get_books():
+                print(each)
             old_isbn = input("Enter the ISBN of the book you want to modify: ")
+
+            # Clear output
+            clear_output() #method 1
+            os.system('cls' if os.name == 'nt' else 'clear') #backup if method 1 fails
+
             isbn = input("Enter ISBN number: ")
             title = input("Enter title: ")
             author = input("Enter author name: ")
@@ -559,14 +594,33 @@ def main():
             new = Book(title, author, pub, date, isbn)
             Lib1.update_book(old_isbn, new)
 
+        # delete book
         case 3:
-            isbn = input("Enter the ISBN of the book you want to delete: ")
-            Lib1.delete_book(isbn)
-
-        case 4:
+            # Display the list of objects in the table
+            print("-" * 100)
+            print(f"{'Books':^100}")
+            print("-" * 100)
             for each in Lib1.get_books():
                 print(each)
+            isbn = input("Enter the ISBN of the book you want to delete: ")
 
+            # Clear output
+            clear_output()  # method 1
+            os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
+            Lib1.delete_book(isbn)
+
+        # get book
+        case 4:
+            print("-" * 100)
+            print(f"{'Books':^100}")
+            print("-" * 100)
+            for each in Lib1.get_books():
+                print(each)
+        # -----------------------------------------------------
+        # Authors
+        # -----------------------------------------------------
+        # create author
         case 5:
             ID = input("Enter author ID number: ")
             name = input("Enter author's name: ")
@@ -575,8 +629,20 @@ def main():
             newAuthor = Author(ID, name, birth_date, origin)
             Lib1.insert_author(newAuthor)
 
+        # update author
         case 6:
+            # Display the list of objects in the table
+            print("-" * 100)
+            print(f"{'Authors':^100}")
+            print("-" * 100)
+            for each in Lib1.get_authors():
+                print(each)
             old_id = input("Enter the ID of the author you want to modify: ")
+
+            # Clear output
+            clear_output()  # method 1
+            os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
             ID = input("Enter author ID number: ")
             name = input("Enter author's name: ")
             birth_date = input("Enter author's birth date: ")
@@ -584,14 +650,34 @@ def main():
             newAuthor = Author(ID, name, birth_date, origin)
             Lib1.update_author(old_id, newAuthor)
 
+        # delete author
         case 7:
+            # Display the list of objects in the table
+            print("-" * 100)
+            print(f"{'Authors':^100}")
+            print("-" * 100)
+            for each in Lib1.get_authors():
+                print(each)
             ID = input("Enter the ID of the author you want to delete: ")
+
+            # Clear output
+            clear_output()  # method 1
+            os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
             Lib1.delete_author(ID)
 
+        # get author
         case 8:
+            print("-" * 100)
+            print(f"{'Authors':^100}")
+            print("-" * 100)
             for each in Lib1.get_authors():
                 print(each)
 
+        # -----------------------------------------------------
+        # Publishers
+        # -----------------------------------------------------
+        # create publisher
         case 9:
             ID = input("Enter publisher's ID number: ")
             name = input("Enter publisher's name: ")
@@ -600,8 +686,20 @@ def main():
             newPub = Publisher(ID, name, address, country)
             Lib1.insert_publisher(newPub)
 
+        # update publisher
         case 10:
+            # Display the list of objects in the table
+            print("-" * 100)
+            print(f"{'Publishers':^100}")
+            print("-" * 100)
+            for each in Lib1.get_publishers():
+                print(each)
             old_id = input("Enter the ID of the publisher you want to modify: ")
+
+            # Clear output
+            clear_output()  # method 1
+            os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
             ID = input("Enter publisher's ID number: ")
             name = input("Enter publisher's name: ")
             address = input("Enter publisher's address: ")
@@ -609,14 +707,34 @@ def main():
             newPub = Publisher(ID, name, address, country)
             Lib1.update_publisher(old_id, newPub)
 
+        # delete publisher
         case 11:
+            # Display the list of objects in the table
+            print("-" * 100)
+            print(f"{'Publishers':^100}")
+            print("-" * 100)
+            for each in Lib1.get_publishers():
+                print(each)
             ID = input("Enter the ID of the borrower you want to delete: ")
+
+            # Clear output
+            clear_output()  # method 1
+            os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
             Lib1.delete_publisher(ID)
 
+        # get publisher
         case 12:
+            print("-" * 100)
+            print(f"{'Publishers':^100}")
+            print("-" * 100)
             for each in Lib1.get_publishers():
                 print(each)
 
+        # -----------------------------------------------------
+        # Borrowers
+        # -----------------------------------------------------
+        # create borrower
         case 13:
             ID = input("Enter borrower's ID number: ")
             name = input("Enter borrower's name: ")
@@ -625,8 +743,20 @@ def main():
             newBorrower = Borrower(ID, name, email, contact)
             Lib1.insert_borrower(newBorrower)
 
+        # update borrower
         case 14:
+            # Display the list of objects in the table
+            print("-" * 100)
+            print(f"{'Borrowers':^100}")
+            print("-" * 100)
+            for each in Lib1.get_borrowers():
+                print(each)
             old_id = input("Enter the ID of the borrower you want to modify: ")
+
+            # Clear output
+            clear_output()  # method 1
+            os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
             ID = input("Enter borrower's ID number: ")
             name = input("Enter borrower's name: ")
             email = input("Enter borrower's email: ")
@@ -634,11 +764,27 @@ def main():
             newBorrower = Borrower(ID, name, email, contact)
             Lib1.update_borrower(old_id, newBorrower)
 
+        # delete borrower
         case 15:
+            # Display the list of objects in the table
+            print("-" * 100)
+            print(f"{'Borrowers':^100}")
+            print("-" * 100)
+            for each in Lib1.get_borrowers():
+                print(each)
             ID = input("Enter the ID of the borrower you want to delete: ")
+
+            # Clear output
+            clear_output()  # method 1
+            os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
             Lib1.delete_borrower(ID)
 
+        # get borrower
         case 16:
+            print("-" * 100)
+            print(f"{'Borrowers':^100}")
+            print("-" * 100)
             for each in Lib1.get_borrowers():
                 print(each)
 
@@ -648,6 +794,11 @@ def main():
     # EXIT
     if usr_input != 17:
         continue_statement = input("Press ENTER to continue!")
+
+        # Clear output
+        clear_output()  # method 1
+        os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
+
         main()
     else:
         return
