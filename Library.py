@@ -139,6 +139,7 @@ class Library:
                 )
             )
             self.conn.commit()
+            isbn = book.ISBN
         if book.title != "":
             self.cursor.execute(
                 """
@@ -257,6 +258,7 @@ class Library:
                 )
             )
             self.conn.commit()
+            ID = author.ID
         if author.name != "":
             self.cursor.execute(
                 """
@@ -361,6 +363,7 @@ class Library:
                 )
             )
             self.conn.commit()
+            ID = publisher.ID
         if publisher.name != "":
             self.cursor.execute(
                 """
@@ -465,6 +468,7 @@ class Library:
                 )
             )
             self.conn.commit()
+            ID = borrower.ID
         if borrower.name != "":
             self.cursor.execute(
                 """
@@ -553,7 +557,7 @@ def main():
     [17]. EXIT
     Enter a number: """))
     Lib1 = Library()
-    
+
     # Clear output
     clear_output()  # method 1
     os.system('cls' if os.name == 'nt' else 'clear')  # backup if method 1 fails
@@ -562,7 +566,7 @@ def main():
         # -----------------------------------------------------
         # Books
         # -----------------------------------------------------
-        # Insert book
+        # create book
         case 1:
             isbn = input("Enter ISBN number: ")
             title = input("Enter title: ")
@@ -803,5 +807,6 @@ def main():
     else:
         return
 
-main()
+if __name__ == '__main__':
+    main()
 
