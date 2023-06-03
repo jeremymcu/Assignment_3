@@ -1,3 +1,6 @@
+# Name: Jeremy (蕭智強)
+# ID: 10890402
+
 import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS
